@@ -54,3 +54,11 @@ Start the backend:
 ```bash
 cd server
 npm start
+```
+
+Start the frontend:
+```bash
+cd ../client
+npm start
+```
+Then go to: http://localhost:3001
