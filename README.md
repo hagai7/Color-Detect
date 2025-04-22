@@ -13,7 +13,7 @@ color-detect/
 - Clarifai API key
 
 ## **Setup Instructions:**
-1. **Clone & Install Dependencies:**
+    **Clone & Install Dependencies:**
     ```bash
     git clone https://github.com/hagai7/color-detect.git
     cd color-detect
@@ -30,16 +30,15 @@ color-detect/
     cd ../server
     npm install
     ```
-
-2. **Set Up PostgreSQL:**
+    **Set Up PostgreSQL:**
     Create a database (e.g. colordetect)
 
     Run the provided SQL script to create the required tables:
     ```bash
     psql -U postgres -d colordetect -f ../create_tables.sql
     ```
-
-3. **Configure Backend:**
+    
+    **Configure Backend:**
     Edit `server/server.js`:
     ```javascript
     const db = knex({
@@ -53,7 +52,7 @@ color-detect/
     });
     ```
 
-4. **Add your Clarifai API key in controllers/image.js.**
+    **Add your Clarifai API key in controllers/image.js.**
 
 ## **Running the App:**
 Start the backend:
