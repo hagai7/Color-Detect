@@ -1,13 +1,19 @@
 # **Color Detect**
 Color detection app built with React (frontend) and Node.js + Express + PostgreSQL (backend).
 
+## **Project Structure:**
+color-detect/
+├── client/                   # Frontend (React)
+├── server/                   # Backend (Node.js + Express)
+├── create_tables.sql         # SQL to create necessary DB tables
+
 ## **Prerequisites:**
 - Node.js & npm
 - PostgreSQL
 - Clarifai API key
 
 ## **Setup Instructions:**
-    **Clone & Install Dependencies:**
+1. **Clone & Install Dependencies:**
     ```bash
     git clone https://github.com/hagai7/color-detect.git
     cd color-detect
@@ -24,15 +30,16 @@ Color detection app built with React (frontend) and Node.js + Express + PostgreS
     cd ../server
     npm install
     ```
-    **Set Up PostgreSQL:**
+
+2. **Set Up PostgreSQL:**
     Create a database (e.g. colordetect)
 
     Run the provided SQL script to create the required tables:
     ```bash
     psql -U postgres -d colordetect -f ../create_tables.sql
     ```
-    
-    **Configure Backend:**
+
+3. **Configure Backend:**
     Edit `server/server.js`:
     ```javascript
     const db = knex({
@@ -46,16 +53,10 @@ Color detection app built with React (frontend) and Node.js + Express + PostgreS
     });
     ```
 
-    **Add your Clarifai API key in controllers/image.js.**
+4. **Add your Clarifai API key in controllers/image.js.**
 
 ## **Running the App:**
 Start the backend:
 ```bash
 cd server
 npm start
-
-Start the frontend:
-cd ../client
-npm start
-
-Then go to: http://localhost:3001
