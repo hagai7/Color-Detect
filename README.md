@@ -1,12 +1,6 @@
 # **Color Detect**
 Color detection app built with React (frontend) and Node.js + Express + PostgreSQL (backend).
 
-## **Project Structure:**
-color-detect/
-├── client/                   # Frontend (React)
-├── server/                   # Backend (Node.js + Express)
-├── create_tables.sql         # SQL to create necessary DB tables
-
 ## **Prerequisites:**
 - Node.js & npm
 - PostgreSQL
