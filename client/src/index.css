@@ -1,0 +1,53 @@
+/* Global reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  body {
+    font-family: 'Quicksand', sans-serif;
+  }  /* New smooth gradient background fitting with purples and dark blues */
+  background: linear-gradient(120deg, #4e5b8e 0%, #a3a9f1 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;  /* Ensure text remains readable */
+}
+
+/* Button styling */
+button {
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Basic styling for all links */
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Content wrapper to center all page content */
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  flex-grow: 1;  /* Ensures content area grows and fills available space */
+}
+
+/* Typography enhancements for headings */
+h1, p {
+  color: white;
+  text-align: center;
+  margin: 0.5rem 0;
+}
