@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import ColorDisplay from './components/ColorDisplay/ColorDisplay';
 import NavBar from './components/NavBar/NavBar';
-import Login from './components/Input/Login';
-import SignUp from './components/Input/SignUp';
+import Login from './components/Auth/Login';
+import SignUp from './components/Auth/SignUp';
 import AppLogo from './components/AppLogo/AppLogo';
 import ColorInputForm from './components/ColorInputForm/ColorInputForm';
 import EntryCount from './components/EntryCount/EntryCount';

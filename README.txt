@@ -1,11 +1,11 @@
-Smart Brain
-Face detection app built with React (frontend) and Node.js + Express + PostgreSQL (backend).
+Color Detect
+Color detection app built with React (frontend) and Node.js + Express + PostgreSQL (backend).
 
 Project Structure:
-smart-brain/
-├── smart-brain-master/        # Frontend (React)
-├── smart-brain-api-master/    # Backend (Node.js + Express)
-├── create_tables.sql          # SQL to create necessary DB tables
+color-detect/
+├── client/    			# Frontend (React)
+├── server/    			# Backend (Node.js + Express)
+├── create_tables.sql         	# SQL to create necessary DB tables
 
 Prerequisites:
 Node.js & npm
@@ -15,25 +15,25 @@ Clarifai API key
 Setup Instructions:
 1. Clone & Install Dependencies:
 
-git clone https://github.com/yourusername/smart-brain.git
-cd smart-brain
+git clone https://github.com/hagai7/color-detect.git
+cd color-detect
 
 # Install frontend
-cd smart-brain-master
+cd client
 npm install
 
 # Install backend
-cd ../smart-brain-api-master
+cd ../server
 npm install
 
 2. Set Up PostgreSQL:
-Create a database (e.g. smartbrain)
+Create a database (e.g. colordetect)
 
 Run the provided SQL script to create the required tables:
-psql -U postgres -d smartbrain -f ../create_tables.sql
+psql -U postgres -d colordetect -f ../create_tables.sql
 
 3. Configure Backend
-Edit smart-brain-api-master/server.js:
+Edit server/server.js:
 
 const db = knex({
   client: 'pg',
@@ -41,7 +41,7 @@ const db = knex({
     host: '127.0.0.1',
     user: 'your_postgres_user',
     password: 'your_postgres_password',
-    database: 'smartbrain'
+    database: 'colordetect'
   }
 });
 
@@ -49,11 +49,11 @@ const db = knex({
 
 Running the App:
 Start the backend:
-cd smart-brain-api-master
+cd server
 npm start
 
 Start the frontend:
-cd ../smart-brain-master
+cd ../client
 npm start
 
 Then go to: http://localhost:3001
@@ -61,6 +61,6 @@ Then go to: http://localhost:3001
 Features:
 Register / Sign In
 
-Face detection using Clarifai API
+Color detection using Clarifai API
 
-User ranking based on number of submissions
+User submission count based on number of submissions
