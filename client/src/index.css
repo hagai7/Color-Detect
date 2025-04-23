@@ -4,13 +4,20 @@
   padding: 0;
   box-sizing: border-box;
 }
+@font-face {
+  font-family: 'Bagnard Sans';
+  src: url('fonts/Nasir Udin - RestoraExtraLight.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Use the font in your body or other elements */
 
 body {
   margin: 0;
   padding: 0;
-  body {
-    font-family: 'Quicksand', sans-serif;
-  }  /* New smooth gradient background fitting with purples and dark blues */
+  font-family: 'Bagnard Sans', sans-serif;
+ /* New smooth gradient background fitting with purples and dark blues */
   background: linear-gradient(120deg, #4e5b8e 0%, #a3a9f1 100%);
   background-attachment: fixed;
   min-height: 100vh;
