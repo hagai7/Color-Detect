@@ -1,5 +1,5 @@
 # **Color Detect**
-**Description:**<br />
+## **Description:**
 The Color Detect App detects dominant colors in an image using the Clarifai API, displaying results as color swatches with names. Built with React, Node.js, and PostgreSQL, it provides a clean and interactive user experience.
 
 ## **Prerequisites:**
