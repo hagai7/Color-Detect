@@ -33,10 +33,10 @@ app.get('/', (req, res) => {
 });
 
 app.post('/login', loginController.handleLogin(db, bcrypt));
-app.post('/signup', (req, res) => signupController.handleSignUp(req, res, db, bcrypt));
-app.get('/profile/:id', (req, res) => profileController.handleProfileGet(req, res, db));
-app.put('/image', (req, res) => imageController.handleImage(req, res, db));
-app.post('/imageurl', (req, res) => imageController.handleApiCall(req, res));
+app.post('/signup', signupController.handleSignUp(db, bcrypt));
+app.get('/profile/:id',  profileController.handleProfileGet(db));
+app.put('/entries', imageController.handleEntriesCount(db));
+app.post('/imageurl', imageController.handleApiCall);
 
 // Start server
 app.listen(3000, () => {

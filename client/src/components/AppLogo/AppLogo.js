@@ -6,8 +6,8 @@ import './AppLogo.css';
 const AppLogo = () => {
   return (
     <div className='ma4 mt0'>
-      <Tilt className="Tilt br2" style={{ height: 100, width: 100 }}>
-        <div className="Tilt-inner pa3">
+      <Tilt className="Tilt br2" style={{ height: 120, width: 120 }}>
+        <div className="pa3">
           <img alt='logo' src={colorPalette} />
         </div>
       </Tilt>

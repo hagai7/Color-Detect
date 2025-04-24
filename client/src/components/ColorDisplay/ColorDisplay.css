@@ -6,20 +6,11 @@
 }
 
 .image-container {
-  width: 100%;
   max-width: 500px;
-  margin-bottom: 0;
-  border-radius: 12px;
-  overflow: hidden;
+  width: 100%;
 }
 
 #inputimage {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  overflow: hidden;
-  margin-top: 0;
-  border: none;
   padding: 20px 0;
 }
 
@@ -27,7 +18,10 @@
   display: flex;
   justify-content: center;
   gap: 20px;
-  padding: 20px 0;
+  padding-bottom: 20px;
+  flex-wrap: wrap;
+  padding-left: 20px; 
+  padding-right: 20px; 
 }
 
 .swatch {
@@ -35,9 +29,6 @@
   height: 150px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
   overflow: hidden;
   cursor: pointer;
@@ -52,21 +43,12 @@
 .swatch-label {
   position: absolute;
   bottom: 10px;
-  left: 50%;
   transform: translateX(-50%);
   background: rgba(255, 255, 255, 0.7);
-  font-size: 14px;
   padding: 6px 12px;
   border-radius: 8px;
   color: #333;
   font-weight: bold;
-  text-align: center;
   width: 100%;
-}
-
-.swatch-color {
-  width: 100%;
-  height: 100%;
-  background-color: inherit;
-  transition: opacity 0.3s ease;
+  border: 1px solid #333;
 }

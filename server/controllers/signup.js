@@ -1,4 +1,4 @@
-const handleSignUp = async (req, res, db, bcrypt) => {
+const handleSignUp = (db, bcrypt) => async (req, res) => {
   const { email, name, password } = req.body;
 
   if (!email || !name || !password) {
@@ -28,7 +28,7 @@ const handleSignUp = async (req, res, db, bcrypt) => {
     res.json(newUser);
 
   } catch (err) {
-    console.error('Signup error:', err);
+    console.error('Sign up error:', err);
     res.status(400).json('Unable to sign up');
   }
 };

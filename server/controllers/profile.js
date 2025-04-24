@@ -1,4 +1,4 @@
-const handleProfileGet = async (req, res, db) => {
+const handleProfileGet = (db) => async (req, res) => {
   const { id } = req.params;
 
   try {

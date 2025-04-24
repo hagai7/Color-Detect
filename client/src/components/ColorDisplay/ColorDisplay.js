@@ -6,14 +6,13 @@ const ColorDisplay = ({ imageUrl, colors }) => {
     <div className='center ma'>
       {/* Image Container */}
       <div className='image-container'>
-        <img id='inputimage' alt='' src={imageUrl} />
+        <img id='inputimage' alt='' src={imageUrl || null}  />
       </div>
 
       {/* Color Swatches */}
       <div className='color-swatches'>
         {colors.map((color, index) => (
           <div key={index} className='swatch' style={{ backgroundColor: color.hex }}>
-            <div className="swatch-color" />
             <span className='swatch-label'>{color.name || color.hex}</span>
           </div>
         ))}

@@ -17,7 +17,7 @@ const handleApiCall = async (req, res) => {
   }
 };
 
-const handleImage = async (req, res, db) => {
+const handleEntriesCount = (db) => async (req, res) => {
   const { id } = req.body;
 
   try {
@@ -28,12 +28,12 @@ const handleImage = async (req, res, db) => {
 
     res.json(entries[0].entries);
   } catch (err) {
-    console.error('Database error:', err);
-    res.status(400).json('Unable to get entries');
+    console.error('Error fetching entries:', error);
+    res.status(500).json('Internal server error');
   }
 };
 
 module.exports = {
   handleApiCall,
-  handleImage
+  handleEntriesCount
 };
