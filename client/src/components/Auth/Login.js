@@ -7,11 +7,17 @@ const Login = ({ loadUser, onRouteChange }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [formErrors, setFormErrors] = useState({
+    email: '',
+    password: ''
+  });
 
   // Handle changes for input fields, clearing the error message when typing begins
   const handleChange = (field) => (event) => {
     const value = event.target.value;
     setError('');
+    setFormErrors({ ...formErrors, [field]: '' });
+
     if (field === 'email') {
       setEmail(value);
     } else if (field === 'password') {
@@ -19,10 +25,33 @@ const Login = ({ loadUser, onRouteChange }) => {
     }
   };
 
+  // Field-specific validation
+  const validateFields = () => {
+    const errors = {
+      email: '',
+      password: ''
+    };
+
+    // Email validation
+    if (!email) {
+      errors.email = 'Email is required.';
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      errors.email = 'Please enter a valid email address.';
+    }
+
+    // Password validation
+    if (!password) {
+      errors.password = 'Password is required.';
+    }
+
+    setFormErrors(errors);
+    return Object.values(errors).every(error => error === '');
+  };
+
   // Function to handle login submission
   const onSubmitLogin = () => {
-    if (!email || !password) {
-      setError('Please fill in both fields.');
+    // Validate fields
+    if (!validateFields()) {
       return;
     }
 
@@ -43,7 +72,7 @@ const Login = ({ loadUser, onRouteChange }) => {
           setPassword('');
           setError('');
         } else {
-          setError('Invalid credentials.');
+          setError('Invalid credentials. Please try again.');
         }
       })
       .catch(() => setError('Server error. Please try again.'));
@@ -55,6 +84,8 @@ const Login = ({ loadUser, onRouteChange }) => {
         <div className="measure">
           <fieldset className="ba b--transparent ph0 mh0">
             <legend className="f1 fw6 ph0 mh0">Login</legend>
+
+            {/* Email Field */}
             <TextInput
               id="email"
               label="Email"
@@ -62,12 +93,18 @@ const Login = ({ loadUser, onRouteChange }) => {
               value={email}
               onChange={handleChange('email')}
             />
+            {formErrors.email && <p className="red f6">{formErrors.email}</p>}
+
+            {/* Password Field */}
             <PasswordInput
               id="password"
               value={password}
               onChange={handleChange('password')}
             />
-            <FormErrorMessage message={error} />
+            {formErrors.password && <p className="red f6">{formErrors.password}</p>}
+
+            {/* Invalid Credentials Error Message */}
+            {error && <p className="red f6">{error}</p>}
           </fieldset>
           <div className="mt3">
             <input

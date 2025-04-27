@@ -8,12 +8,19 @@ const SignUp = ({ loadUser, onRouteChange }) => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [error, setError] = useState('');
+  const [formErrors, setFormErrors] = useState({
+    name: '',
+    email: '',
+    password: ''
+  });
 
   // Generic change handler that updates the corresponding state based on field name
   const handleChange = (field) => (event) => {
     const value = event.target.value;
     // Clear any existing error when a new input is entered
     setError('');
+    setFormErrors({ ...formErrors, [field]: '' });
+    
     // Update state based on which field is being changed
     if (field === 'name') {
       setName(value);
@@ -24,15 +31,43 @@ const SignUp = ({ loadUser, onRouteChange }) => {
     }
   };
 
-  // Handles sign up submission
+  // Field-specific validation
+  const validateFields = () => {
+    const errors = {
+      name: '',
+      email: '',
+      password: ''
+    };
+
+    // Name validation
+    if (!name) errors.name = 'Name is required.';
+    
+    // Email validation
+    if (!email) {
+      errors.email = 'Email is required.';
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      errors.email = 'Please enter a valid email address.';
+    }
+    
+    // Password validation
+    if (!password) {
+      errors.password = 'Password is required.';
+    } else if (password.length < 6) {
+      errors.password = 'Password must be at least 6 characters.';
+    }
+
+    setFormErrors(errors);
+    return Object.values(errors).every(error => error === '');
+  };
+
+  // Handles sign-up submission
   const onSubmitSignUp = () => {
-    // Validate that all fields are filled in
-    if (!name || !email || !password) {
-      setError('Please fill in all fields.');
+    // Validate that all fields are filled in and are correct
+    if (!validateFields()) {
       return;
     }
 
-    // Send POST request to the sign up endpoint
+    // Send POST request to the sign-up endpoint
     fetch('http://localhost:3000/signup', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
@@ -40,21 +75,23 @@ const SignUp = ({ loadUser, onRouteChange }) => {
     })
       .then(res => res.json())
       .then(user => {
-        // If a user id is returned, the sign up was successful
+        // If a user id is returned, the sign-up was successful
         if (user.id) {
           loadUser(user);
           onRouteChange('home');
-          // Clear form fields and error after successful sign up
+          // Clear form fields and error after successful sign-up
           setEmail('');
           setPassword('');
           setName('');
           setError('');
         } else {
-          // Otherwise, update error state with a failure message
+          // Update error state with a failure message from the server
           setError('Sign Up failed. Please try again.');
         }
       })
-      .catch(() => setError('Server error. Please try again.'));
+      .catch(() => {
+        setError('We encountered an issue with the server. Please try again later.');
+      });
   };
 
   return (
@@ -63,12 +100,17 @@ const SignUp = ({ loadUser, onRouteChange }) => {
         <div className="measure">
           <fieldset className="ba b--transparent ph0 mh0">
             <legend className="f1 fw6 ph0 mh0">Sign Up</legend>
+            
+            {/* Name Field */}
             <TextInput 
               id="name" 
               label="Name" 
               value={name} 
               onChange={handleChange('name')} 
             />
+            {formErrors.name && <p className="red f6">{formErrors.name}</p>}
+            
+            {/* Email Field */}
             <TextInput 
               id="email" 
               label="Email" 
@@ -76,12 +118,18 @@ const SignUp = ({ loadUser, onRouteChange }) => {
               value={email} 
               onChange={handleChange('email')} 
             />
+            {formErrors.email && <p className="red f6">{formErrors.email}</p>}
+            
+            {/* Password Field */}
             <PasswordInput 
               id="password" 
               value={password} 
               onChange={handleChange('password')} 
             />
-            <FormErrorMessage message={error} />
+            {formErrors.password && <p className="red f6">{formErrors.password}</p>}
+            
+            {/* Server Error Message */}
+            {error && <p className="red f6">{error}</p>}
           </fieldset>
           <div className="mt3">
             <input
