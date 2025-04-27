@@ -6,8 +6,21 @@ const handleSignUp = (db, bcrypt) => async (req, res) => {
   }
 
   try {
+    // Check if the email or name already exists
+    const existingEmail = await db('login').where('email', email).first();
+    if (existingEmail) {
+      return res.status(400).json('Email is already registered');
+    }
+
+    const existingName = await db('users').where('name', name).first();
+    if (existingName) {
+      return res.status(400).json('Name is already taken');
+    }
+
+    // Hash the password before saving it
     const hash = bcrypt.hashSync(password);
 
+    // Start transaction to insert user and login details
     const newUser = await db.transaction(async trx => {
       const loginEmail = await trx('login')
         .insert({ hash, email })

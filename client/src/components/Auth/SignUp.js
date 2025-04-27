@@ -60,13 +60,12 @@ const SignUp = ({ loadUser, onRouteChange }) => {
     return Object.values(errors).every(error => error === '');
   };
 
-  // Handles sign-up submission
   const onSubmitSignUp = () => {
     // Validate that all fields are filled in and are correct
     if (!validateFields()) {
       return;
     }
-
+  
     // Send POST request to the sign-up endpoint
     fetch('http://localhost:3000/signup', {
       method: 'post',
@@ -85,14 +84,21 @@ const SignUp = ({ loadUser, onRouteChange }) => {
           setName('');
           setError('');
         } else {
-          // Update error state with a failure message from the server
-          setError('Sign Up failed. Please try again.');
+          // Handle errors based on the message returned from the server
+          if (user === 'Email is already registered') {
+            setError('The email you entered is already associated with an account.');
+          } else if (user === 'Name is already taken') {
+            setError('The name you entered is already in use.');
+          } else {
+            setError('Sign Up failed. Please try again.');
+          }
         }
       })
       .catch(() => {
         setError('We encountered an issue with the server. Please try again later.');
       });
   };
+  
 
   return (
     <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
