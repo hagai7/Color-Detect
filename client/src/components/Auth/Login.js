@@ -1,45 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextInput from './TextInput';
 import PasswordInput from './PasswordInput';
-import FormErrorMessage from './FormErrorMessage';
 
-const Login = ({ loadUser, onRouteChange }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+/**
+ * Login component handles the login process by accepting the user's email
+ * and password, performing form validation, and submitting login requests.
+ * It provides feedback on login success or failure.
+ * 
+ * @param {function} loadUser - A function to load the user information after a successful login.
+ * @param {function} onRouteChange - A function to handle route changes (used to navigate to different views).
+ * @param {string} route - Current route (used to reset form when route changes).
+ * 
+ * @returns {JSX.Element} A JSX structure representing the login form and its logic.
+ */
+const Login = ({ loadUser, onRouteChange, route }) => {
+  const [email, setEmail] = useState('');  // State to store email input value
+  const [password, setPassword] = useState('');  // State to store password input value
+  const [error, setError] = useState('');  // State to store any general error message
   const [formErrors, setFormErrors] = useState({
-    email: '',
-    password: ''
+    email: '',  // Stores email validation error message
+    password: ''  // Stores password validation error message
   });
 
-  // Handle changes for input fields, clearing the error message when typing begins
+  // Reset form and error states when the route changes (useEffect hook)
+  useEffect(() => {
+    setEmail('');
+    setPassword('');
+    setError('');
+    setFormErrors({
+      email: '',
+      password: ''
+    });
+  }, [route]);
+
+  /**
+   * Handle changes in the input fields (email, password).
+   * Clears the error messages when the user modifies the fields.
+   * 
+   * @param {string} field - Name of the field being modified (either 'email' or 'password').
+   * @returns {function} A function to handle input change event.
+   */
   const handleChange = (field) => (event) => {
     const value = event.target.value;
     setError('');
     setFormErrors({ ...formErrors, [field]: '' });
 
-    if (field === 'email') {
-      setEmail(value);
-    } else if (field === 'password') {
-      setPassword(value);
-    }
+    if (field === 'email') setEmail(value);
+    else if (field === 'password') setPassword(value);
   };
 
-  // Field-specific validation
+  /**
+   * Validates the email and password fields.
+   * Displays appropriate error messages if validation fails.
+   * 
+   * @returns {boolean} True if all fields are valid, false otherwise.
+   */
   const validateFields = () => {
     const errors = {
       email: '',
       password: ''
     };
 
-    // Email validation
     if (!email) {
       errors.email = 'Email is required.';
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       errors.email = 'Please enter a valid email address.';
     }
 
-    // Password validation
     if (!password) {
       errors.password = 'Password is required.';
     }
@@ -48,14 +75,15 @@ const Login = ({ loadUser, onRouteChange }) => {
     return Object.values(errors).every(error => error === '');
   };
 
-  // Function to handle login submission
+  /**
+   * Handles form submission.
+   * Sends a POST request with email and password to the server.
+   * If the login is successful, it loads the user and changes the route.
+   * If there is an error (invalid credentials), it displays an error message.
+   */
   const onSubmitLogin = () => {
-    // Validate fields
-    if (!validateFields()) {
-      return;
-    }
+    if (!validateFields()) return;
 
-    // Send login credentials to the server endpoint
     fetch('http://localhost:3000/login', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
@@ -64,13 +92,8 @@ const Login = ({ loadUser, onRouteChange }) => {
       .then(res => res.json())
       .then(user => {
         if (user.id) {
-          // If login is successful, update user data and change route to home
-          loadUser(user);
-          onRouteChange('home');
-          // Clear the login form
-          setEmail('');
-          setPassword('');
-          setError('');
+          loadUser(user);  // Load user data into the application
+          onRouteChange('home');  // Redirect to the home page
         } else {
           setError('Invalid credentials. Please try again.');
         }
@@ -85,7 +108,7 @@ const Login = ({ loadUser, onRouteChange }) => {
           <fieldset className="ba b--transparent ph0 mh0">
             <legend className="f1 fw6 ph0 mh0">Login</legend>
 
-            {/* Email Field */}
+            {/* Email Input */}
             <TextInput
               id="email"
               label="Email"
@@ -95,17 +118,17 @@ const Login = ({ loadUser, onRouteChange }) => {
             />
             {formErrors.email && <p className="red f6">{formErrors.email}</p>}
 
-            {/* Password Field */}
+            {/* Password Input */}
             <PasswordInput
               id="password"
               value={password}
               onChange={handleChange('password')}
             />
             {formErrors.password && <p className="red f6">{formErrors.password}</p>}
-
-            {/* Invalid Credentials Error Message */}
             {error && <p className="red f6">{error}</p>}
           </fieldset>
+
+          {/* Submit Button */}
           <div className="mt3">
             <input
               onClick={onSubmitLogin}
@@ -114,6 +137,8 @@ const Login = ({ loadUser, onRouteChange }) => {
               value="Login"
             />
           </div>
+
+          {/* Register Link */}
           <div className="lh-copy mt3">
             <p
               onClick={() => onRouteChange('register')}

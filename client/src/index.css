@@ -5,7 +5,7 @@
   box-sizing: border-box;
 }
 @font-face {
-  font-family: 'Bagnard Sans';
+  font-family: 'Restora Extra Light';
   src: url('fonts/Nasir Udin - RestoraExtraLight.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
@@ -16,9 +16,8 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Bagnard Sans', sans-serif;
- /* New smooth gradient background fitting with purples and dark blues */
-  background: linear-gradient(120deg, #4e5b8e 0%, #a3a9f1 100%);
+  font-family: 'Restora Extra Light', sans-serif;
+  background: linear-gradient(120deg, #7886c2 0%, #c4c9f8 100%);
   background-attachment: fixed;
   min-height: 100vh;
   display: flex;

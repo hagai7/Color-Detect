@@ -8,12 +8,15 @@ import ColorInputForm from './components/ColorInputForm/ColorInputForm';
 import EntryCount from './components/EntryCount/EntryCount';
 import './App.css';
 
+/**
+ * Initial state for the app
+ */
 const initialState = {
   input: '',
   imageUrl: '',
   colors: [],
-  route: 'login',
-  isLoggedIn: false,
+  route: 'login',  // Initial route is set to 'login'
+  isLoggedIn: false,  // User is initially not logged in
   user: {
     id: '',
     name: '',
@@ -24,6 +27,7 @@ const initialState = {
 };
 
 const App = () => {
+  // State hooks for input, image URL, colors, route, login status, and user data
   const [input, setInput] = useState(initialState.input);
   const [imageUrl, setImageUrl] = useState(initialState.imageUrl);
   const [colors, setColors] = useState(initialState.colors);
@@ -31,7 +35,11 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(initialState.isLoggedIn);
   const [user, setUser] = useState(initialState.user);
 
-  // Helper function to extract color information from API response
+  /**
+   * Helper function to extract color information from API response.
+   * @param {Object} data - The API response data containing color information.
+   * @returns {Array} Parsed array of color objects containing hex and name.
+   */
   const getColorsFromResponse = (data) => {
     const rawColors = data.outputs[0].data.colors;
     return rawColors.map(color => ({
@@ -40,7 +48,10 @@ const App = () => {
     }));
   };
 
-  // Function to load a user after login or signup
+  /**
+   * Function to load the user data after login or signup.
+   * @param {Object} data - The user data received from the server.
+   */
   const loadUser = (data) => {
     setUser({
       id: data.id,
@@ -55,12 +66,18 @@ const App = () => {
     setColors([]);
   };
 
-  // Handler for input change events
+  /**
+   * Handler for input change events (e.g., color URL input).
+   * @param {Event} event - The event object containing the input value.
+   */
   const onInputChange = (event) => {
     setInput(event.target.value);
   };
 
-  // Handler for submitting the image URL
+  /**
+   * Handler for submitting the image URL.
+   * Submits the URL to the backend API, updates entries, and extracts color data.
+   */
   const onButtonSubmit = () => {
     setImageUrl(input);
     fetch('http://localhost:3000/imageurl', {
@@ -96,7 +113,10 @@ const App = () => {
       .catch(err => console.log(err));
   };
 
-  // Handler for route changes
+  /**
+   * Handler for route changes (e.g., navigation between login, sign-up, and home).
+   * @param {String} newRoute - The new route to navigate to.
+   */
   const onRouteChange = (newRoute) => {
     if (newRoute === 'logout') {
       // Reset state on logout
@@ -110,6 +130,7 @@ const App = () => {
       setIsLoggedIn(true);
     }
     setRoute(newRoute);
+    console.log("Route changed");
   };
 
   // Main render (returning JSX)
@@ -132,8 +153,8 @@ const App = () => {
           </div>
         ) : (
           route === 'login'
-            ? <Login loadUser={loadUser} onRouteChange={onRouteChange} />
-            : <SignUp loadUser={loadUser} onRouteChange={onRouteChange} />
+            ? <Login loadUser={loadUser} onRouteChange={onRouteChange} route={route} />
+            : <SignUp loadUser={loadUser} onRouteChange={onRouteChange} route={route}/>
         )
       }
     </div>

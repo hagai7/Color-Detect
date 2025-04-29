@@ -1,27 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextInput from './TextInput';
 import PasswordInput from './PasswordInput';
-import FormErrorMessage from './FormErrorMessage';
 
+/**
+ * SignUp Component - Handles the user registration process including form input, validation, 
+ * and server interaction for creating a new user account.
+ * 
+ * @param {Object} props - Component props
+ * @param {Function} props.loadUser - Callback function to load user data after successful sign-up
+ * @param {Function} props.onRouteChange - Callback function to navigate between routes (e.g., login, home)
+ * 
+ * @returns {JSX.Element} The SignUp component.
+ */
 const SignUp = ({ loadUser, onRouteChange }) => {
+  // State to hold form input values
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  
+  // State to hold error messages
   const [error, setError] = useState('');
+  
+  // State to hold form validation errors
   const [formErrors, setFormErrors] = useState({
     name: '',
     email: '',
     password: ''
   });
 
-  // Generic change handler that updates the corresponding state based on field name
+  // Reset form when route changes
+  useEffect(() => {
+    setName('');
+    setEmail('');
+    setPassword('');
+    setError('');
+    setFormErrors({
+      name: '',
+      email: '',
+      password: '',
+    });
+  }, [onRouteChange]);
+
+  /**
+   * Handles changes in the input fields by updating the corresponding state.
+   * 
+   * @param {string} field - The name of the field being changed (name, email, or password)
+   * @returns {Function} A function that updates the specific field's state.
+   */
   const handleChange = (field) => (event) => {
     const value = event.target.value;
-    // Clear any existing error when a new input is entered
+    
+    // Reset any previous error when a user types
     setError('');
     setFormErrors({ ...formErrors, [field]: '' });
     
-    // Update state based on which field is being changed
+    // Update state based on the field being modified
     if (field === 'name') {
       setName(value);
     } else if (field === 'email') {
@@ -31,7 +64,11 @@ const SignUp = ({ loadUser, onRouteChange }) => {
     }
   };
 
-  // Field-specific validation
+  /**
+   * Validates the form fields to ensure required values are provided and follow correct formats.
+   * 
+   * @returns {boolean} True if all fields are valid, otherwise false.
+   */
   const validateFields = () => {
     const errors = {
       name: '',
@@ -56,16 +93,23 @@ const SignUp = ({ loadUser, onRouteChange }) => {
       errors.password = 'Password must be at least 6 characters.';
     }
 
+    // Update the state with error messages
     setFormErrors(errors);
+    // Return true if there are no errors
     return Object.values(errors).every(error => error === '');
   };
 
+  /**
+   * Handles the form submission for the sign-up process.
+   * Sends a request to the server to create a new user.
+   * If successful, it loads the user data and navigates to the home route.
+   */
   const onSubmitSignUp = () => {
-    // Validate that all fields are filled in and are correct
+    // Validate fields before submitting
     if (!validateFields()) {
       return;
     }
-  
+
     // Send POST request to the sign-up endpoint
     fetch('http://localhost:3000/signup', {
       method: 'post',
@@ -74,31 +118,35 @@ const SignUp = ({ loadUser, onRouteChange }) => {
     })
       .then(res => res.json())
       .then(user => {
-        // If a user id is returned, the sign-up was successful
+        // If the user ID is returned, the sign-up was successful
         if (user.id) {
           loadUser(user);
           onRouteChange('home');
-          // Clear form fields and error after successful sign-up
-          setEmail('');
-          setPassword('');
-          setName('');
-          setError('');
         } else {
-          // Handle errors based on the message returned from the server
-          if (user === 'Email is already registered') {
-            setError('The email you entered is already associated with an account.');
-          } else if (user === 'Name is already taken') {
-            setError('The name you entered is already in use.');
-          } else {
-            setError('Sign Up failed. Please try again.');
-          }
+          // Handle errors based on server response
+          handleErrors(user, setError);
         }
       })
       .catch(() => {
         setError('We encountered an issue with the server. Please try again later.');
       });
   };
-  
+
+  /**
+   * Handles specific error messages based on server response.
+   * 
+   * @param {string} user - The error message returned from the server
+   * @param {Function} setError - The state setter function to update the error state
+   */
+  const handleErrors = (user, setError) => {
+    if (user === 'Email is already registered') {
+      setError('The email you entered is already associated with an account.');
+    } else if (user === 'Name is already taken') {
+      setError('The name you entered is already in use.');
+    } else {
+      setError('Sign Up failed. Please try again.');
+    }
+  };
 
   return (
     <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
