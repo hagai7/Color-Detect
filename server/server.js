@@ -1,12 +1,10 @@
 require('dotenv').config();
 
-
 const express = require('express');
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
 const knex = require('knex');
 const PORT = process.env.PORT || 3000;
-
 
 // Importing the controllers
 const signupController = require('./controllers/signup');
@@ -38,17 +36,12 @@ app.get('/profile/:id',  profileController.handleProfileGet(db));
 app.put('/entries', imageController.handleEntriesCount(db));
 app.post('/imageurl', imageController.handleApiCall);
 
-
-const path = require('path');
-
 // Routes
 app.get('/', (_req, res) => {
   res.send('API is working');
 });
 
-
 // Start server
-
 app.listen(PORT, () => {
   console.log(`App is running on port ${PORT}`);
 });
