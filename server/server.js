@@ -38,6 +38,18 @@ app.get('/profile/:id',  profileController.handleProfileGet(db));
 app.put('/entries', imageController.handleEntriesCount(db));
 app.post('/imageurl', imageController.handleApiCall);
 
+
+const path = require('path');
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Catch-all: send back index.html for any unknown route (client-side routing support)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+
 // Start server
 app.listen(3000, () => {
   console.log('App is running on port 3000');
