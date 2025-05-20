@@ -1,4 +1,3 @@
-import React from 'react';
 
 const PasswordInput = ({ id, value, onChange }) => (
   <div className="mv3">

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import TextInput from './TextInput';
 import PasswordInput from './PasswordInput';
+
 
 /**
  * Login component handles the login process by accepting the user's email
@@ -84,7 +85,7 @@ const Login = ({ loadUser, onRouteChange, route }) => {
   const onSubmitLogin = () => {
     if (!validateFields()) return;
 
-    fetch('http://localhost:3000/login', {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/login`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })

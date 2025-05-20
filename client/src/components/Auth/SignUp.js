@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import TextInput from './TextInput';
 import PasswordInput from './PasswordInput';
 
@@ -111,7 +111,7 @@ const SignUp = ({ loadUser, onRouteChange }) => {
     }
 
     // Send POST request to the sign-up endpoint
-    fetch('http://localhost:3000/signup', {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/signup`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password, name })

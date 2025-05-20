@@ -1,4 +1,3 @@
-import React from 'react';
 
 const TextInput = ({ label, id, type = 'text', value, onChange }) => (
   <div className="mt3">

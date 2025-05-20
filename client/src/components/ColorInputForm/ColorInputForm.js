@@ -1,4 +1,3 @@
-import React from 'react';
 import './ColorInputForm.css';
 
 const ColorInputForm = ({ onInputChange, onButtonSubmit }) => {

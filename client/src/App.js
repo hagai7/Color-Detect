@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ColorDisplay from './components/ColorDisplay/ColorDisplay';
 import NavBar from './components/NavBar/NavBar';
 import Login from './components/Auth/Login';
@@ -7,6 +7,7 @@ import AppLogo from './components/AppLogo/AppLogo';
 import ColorInputForm from './components/ColorInputForm/ColorInputForm';
 import EntryCount from './components/EntryCount/EntryCount';
 import './App.css';
+
 
 /**
  * Initial state for the app
@@ -80,7 +81,7 @@ const App = () => {
    */
   const onButtonSubmit = () => {
     setImageUrl(input);
-    fetch('http://localhost:3000/imageurl', {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/imageurl`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -90,7 +91,7 @@ const App = () => {
       .then(response => response.json())
       .then(response => {
         if (response) {
-          fetch('http://localhost:3000/entries', {
+          fetch(`${process.env.REACT_APP_API_BASE_URL}/entires`, {
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

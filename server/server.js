@@ -1,3 +1,6 @@
+require('dotenv').config();
+
+
 const express = require('express');
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
@@ -38,16 +41,11 @@ app.post('/imageurl', imageController.handleApiCall);
 
 const path = require('path');
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'build')));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
-
 // Routes
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.send('API is working');
 });
+
 
 // Start server
 

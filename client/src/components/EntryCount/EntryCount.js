@@ -1,4 +1,3 @@
-import React from 'react';
 
 const EntryCount = ({ name, entries }) => {
   return (

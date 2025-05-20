@@ -1,4 +1,3 @@
-import React from 'react';
 import './ColorDisplay.css';  // Update the CSS filename
 
 const ColorDisplay = ({ imageUrl, colors }) => {
