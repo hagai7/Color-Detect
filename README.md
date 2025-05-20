@@ -27,6 +27,7 @@ The Color Detect App detects dominant colors in an image using the Clarifai API,
     ```
 
 2. **Set Up PostgreSQL:**
+   
     Create a database (e.g. colordetect)
 
     Run the provided SQL script to create the required tables:
