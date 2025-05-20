@@ -2,6 +2,8 @@ const express = require('express');
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
 const knex = require('knex');
+const PORT = process.env.PORT || 3000;
+
 
 // Importing the controllers
 const signupController = require('./controllers/signup');
@@ -13,10 +15,10 @@ const imageController = require('./controllers/image');
 const db = knex({
   client: 'pg',
   connection: {
-    host: '127.0.0.1',
-    user: 'postgres',
-    password: 'hagai007',
-    database: 'test',
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
   },
 });
 
@@ -51,6 +53,7 @@ app.get('*', (req, res) => {
 
 
 // Start server
-app.listen(3000, () => {
-  console.log('App is running on port 3000');
+
+app.listen(PORT, () => {
+  console.log(`App is running on port ${PORT}`);
 });
