@@ -29,11 +29,6 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // Express includes built-in body parser from version 4.16+
 
-// Routes
-app.get('/', (req, res) => {
-  res.send('API is working');
-});
-
 app.post('/login', loginController.handleLogin(db, bcrypt));
 app.post('/signup', signupController.handleSignUp(db, bcrypt));
 app.get('/profile/:id',  profileController.handleProfileGet(db));
@@ -49,6 +44,10 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
+// Routes
+app.get('/', (req, res) => {
+  res.send('API is working');
+});
 
 // Start server
 
