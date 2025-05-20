@@ -35,6 +35,7 @@ The Color Detect App detects dominant colors in an image using the Clarifai API,
     ```
 
 3. **Configure Environment Variables:**
+    ```
     In the `server` folder, create a `.env` file and add:
     ```
     DB_HOST=127.0.0.1
