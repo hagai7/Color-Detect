@@ -35,9 +35,9 @@ The Color Detect App detects dominant colors in an image using the Clarifai API,
     ```
 
 3. **Configure Environment Variables:**
-    ```
+
     In the `server` folder, create a `.env` file and add:
-    ```
+    ```bash
     DB_HOST=127.0.0.1
     DB_USER=your_postgres_user
     DB_PASS=your_postgres_password
@@ -46,8 +46,9 @@ The Color Detect App detects dominant colors in an image using the Clarifai API,
     ```
 
     In the `client` folder, create a `.env` file and add:
-    ```
+    ```bash
     REACT_APP_API_BASE_URL=http://localhost:3001
+    ```
 
 ## **Running the App:**
 Start the backend:
